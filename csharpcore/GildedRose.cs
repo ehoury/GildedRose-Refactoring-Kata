@@ -14,71 +14,67 @@ namespace csharpcore
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                if (!Items[i].Name.Equals(ConstantName.AgedBrie) 
-                    && !Items[i].Name.Equals(ConstantName.BackStagePasses) 
-                    && !Items[i].Name.Equals(ConstantName.SulfurasHandOfRagnaros) 
-                                            && Items[i].Quality > 0)
+                var item = Items[i];
+                if (!item.Name.Equals(ConstantName.AgedBrie) 
+                    && !item.Name.Equals(ConstantName.BackStagePasses) 
+                    && !item.Name.Equals(ConstantName.SulfurasHandOfRagnaros) 
+                                            && item.Quality > 0)
                 {
-                    Items[i].Quality = Items[i].Quality - 1;
+                    item.Quality = item.Quality - 1;
                 }
                 else
                 {
-                    if (Items[i].Quality < 50)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-
-                        if (Items[i].Name.Equals(ConstantName.BackStagePasses))
-                        {
-                            if (Items[i].SellIn < 11 && Items[i].Quality < 50)
-                            {
-                                Items[i].Quality = Items[i].Quality + 1;
-                            }
-
-                            if (Items[i].SellIn < 6 && Items[i].Quality < 50)
-                            {
-                                Items[i].Quality = Items[i].Quality + 1;
-                            }
-                        }
-                    }
+                    HandleLowerQuality(item);
                 }
 
-                if (!Items[i].Name.Equals(ConstantName.SulfurasHandOfRagnaros))
+                if (!item.Name.Equals(ConstantName.SulfurasHandOfRagnaros))
                 {
-                    Items[i].SellIn = Items[i].SellIn - 1;
+                    item.SellIn = item.SellIn - 1;
                 }
 
-                if (Items[i].SellIn < 0)
+                if (item.SellIn < 0)
                 {
-                    if (!Items[i].Name.Equals(ConstantName.AgedBrie))
+                    if (!item.Name.Equals(ConstantName.AgedBrie))
                     {
-                        if (!Items[i].Name.Equals(ConstantName.BackStagePasses))
+                        if (!item.Name.Equals(ConstantName.BackStagePasses))
                         {
-                            if (Items[i].Quality > 0 && !Items[i].Name.Equals(ConstantName.SulfurasHandOfRagnaros))
+                            if (item.Quality > 0 && !item.Name.Equals(ConstantName.SulfurasHandOfRagnaros))
                             {
-                                Items[i].Quality = Items[i].Quality - 1;
+                                item.Quality = item.Quality - 1;
                             }
                         }
                         else
                         {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
+                            item.Quality = item.Quality - item.Quality;
                         }
                     }
                     else
                     {
-                        if (Items[i].Quality < 50)
-                        {
-                            Items[i].Quality = Items[i].Quality + 1;
-                        }
+                        HandleLowerQuality(item);
                     }
                 }
             }
         }
-    }
 
-    public static class ConstantName
-    {
-        public static string AgedBrie = "Aged Brie";
-        public static string SulfurasHandOfRagnaros = "Sulfuras, Hand of Ragnaros";
-        public static string BackStagePasses = "Backstage passes to a TAFKAL80ETC concert";
+        private static void HandleLowerQuality(Item item)
+        {
+            if (item.Quality < 50)
+            {
+                item.Quality = item.Quality + 1;
+
+                if (item.Name.Equals(ConstantName.BackStagePasses))
+                {
+                    if (item.SellIn < 11 && item.Quality < 50)
+                    {
+                        item.Quality = item.Quality + 1;
+                    }
+
+                    if (item.SellIn < 6 && item.Quality < 50)
+                    {
+                        item.Quality = item.Quality + 1;
+                    }
+                }
+            }
+        }
     }
 }
