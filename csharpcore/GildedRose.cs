@@ -14,11 +14,11 @@ namespace csharpcore
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                if (!Items[i].Name.Equals("Aged Brie") && !Items[i].Name.Equals("Backstage passes to a TAFKAL80ETC concert"))
+                if (!Items[i].Name.Equals(ConstantName.AgedBrie) && !Items[i].Name.Equals("Backstage passes to a TAFKAL80ETC concert"))
                 {
                     if (Items[i].Quality > 0)
                     {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                        if (Items[i].Name != ConstantName.SulfurasHandOfRagnaros)
                         {
                             Items[i].Quality = Items[i].Quality - 1;
                         }
@@ -85,5 +85,11 @@ namespace csharpcore
                 }
             }
         }
+    }
+
+    public static class ConstantName
+    {
+        public static string AgedBrie = "Aged Brie";
+        public static string SulfurasHandOfRagnaros = "Sulfuras, Hand of Ragnaros";
     }
 }
