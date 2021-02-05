@@ -62,14 +62,15 @@ namespace csharpcore
             {
                 item.Quality = item.Quality + 1;
 
-                if (item.Name.Equals(ConstantName.BackStagePasses))
+                if (item.Name.Equals(ConstantName.BackStagePasses) &&
+                    item.Quality < 50)
                 {
-                    if (item.SellIn < 11 && item.Quality < 50)
+                    if (item.SellIn < 11)
                     {
                         item.Quality = item.Quality + 1;
                     }
 
-                    if (item.SellIn < 6 && item.Quality < 50)
+                    if (item.SellIn < 6)
                     {
                         item.Quality = item.Quality + 1;
                     }
